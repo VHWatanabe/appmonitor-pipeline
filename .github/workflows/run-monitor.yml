@@ -1,0 +1,31 @@
+name: Run Monitor
+
+on:
+  workflow_dispatch:
+
+jobs:
+  env_job:
+    name: Job com variáveis de ambiente (env)
+    runs-on: ubuntu-latest
+    env:
+      MONITOR_MODE: ping
+    steps:
+      - name: Exibir variável de ambiente
+        run: |
+          echo "Modo de monitoramento: $MONITOR_MODE"
+
+  vars_job:
+    name: Job com contextos (vars)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exibir variáveis do contexto vars
+        run: |
+          echo "Ambiente da aplicação: ${{ vars.APP_ENV }}"
+          echo "E-mail de suporte: ${{ vars.SUPPORT_EMAIL }}"
+
+  secrets_job:
+    name: Job com segredos (secrets)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simular uso do segredo do GitHub
+        run: echo "Chave de API recebida com sucesso e está sendo usada com segurança"

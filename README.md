@@ -44,3 +44,16 @@ São informações sensíveis como chaves de API, tokens ou senhas. Definidas em
 - **Mensagens personalizadas** usando `::warning::` e `::error::` permitem destacar avisos ou erros diretamente nos logs, ajudando a chamar atenção para pontos críticos da pipeline.
 
 Essas ferramentas combinadas melhoram muito o diagnóstico e a manutenção dos pipelines de CI/CD.
+
+---
+
+## Diagnóstico Automático de Falhas
+
+O workflow `diagnostic.yml` implementa um diagnóstico automatizado para verificar se variáveis essenciais (como `APP_ENV` e `API_KEY`) estão configuradas corretamente antes da execução dos demais passos. Caso alguma variável esteja ausente, o pipeline:
+
+- Gera erros claros e interrompe a execução para evitar falhas posteriores;
+- Registra logs e mensagens de diagnóstico para facilitar a análise;
+- Produz um resumo (job summary) com status detalhado e sugestões para correção.
+
+Para este workflow, foi utilizado workflow_dispatch para que seja possível rodar esta verificação a qualquer momento, não apenas em pushes ou pull requests.
+Esse mecanismo garante maior observabilidade e feedback imediato, ajudando a identificar e corrigir problemas rapidamente, tornando o pipeline mais resiliente e confiável.

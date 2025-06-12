@@ -1,0 +1,58 @@
+name: Diagnostic Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: ${{ vars.APP_ENV }}
+      API_KEY: ${{ secrets.API_KEY }}
+
+    steps:
+      - name: Início da verificação das variáveis
+        run: echo "Iniciando diagnóstico das variáveis obrigatórias..."
+
+      - name: Verificar APP_ENV
+        run: |
+          if [ -z "$APP_ENV" ]; then
+            echo "::error::Variável APP_ENV não está definida."
+            echo "Por favor, defina APP_ENV em Actions > Variables."
+            exit 1
+          else
+            echo "Variável APP_ENV detectada: $APP_ENV"
+          fi
+
+      - name: Verificar API_KEY
+        run: |
+          if [ -z "$API_KEY" ]; then
+            echo "::error::Segredo API_KEY não está definido."
+            echo "Por favor, defina API_KEY em Actions > Secrets."
+            exit 1
+          else
+            echo "Segredo API_KEY detectado com sucesso."
+          fi
+
+      - name: Registrar logs de diagnóstico
+        run: |
+          echo "Todas as variáveis obrigatórias estão configuradas corretamente."
+          echo "Sistema operacional: $RUNNER_OS"
+          echo "Branch atual: $GITHUB_REF_NAME"
+
+      - name: Criar resumo do diagnóstico
+        run: |
+          echo "## Diagnóstico do Pipeline" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -z "$APP_ENV" ]; then
+            echo "-Variável APP_ENV **não está definida**. Defina em Actions > Variables." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "-Variável APP_ENV está definida: $APP_ENV" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -z "$API_KEY" ]; then
+            echo "-Segredo API_KEY **não está definido**. Defina em Actions > Secrets." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "-Segredo API_KEY está definido com sucesso." >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Se houver erros, revise as configurações para garantir que todas as variáveis estejam presentes."

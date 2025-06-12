@@ -1,0 +1,17 @@
+name: Deploy Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy para produção
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://appmonitor.com
+    steps:
+      - name: Simular deploy
+        run: echo "Deploying to ${{ vars.PROD_DOMAIN }}"

@@ -19,3 +19,16 @@ Tags marcam pontos específicos no histórico do projeto, como versões estávei
 ## Estrutura Inicial
 
 - `status-check.sh`: Script de exemplo para verificação do status HTTP de uma URL.
+
+---
+
+## Variáveis, Secrets e Contextos no GitHub Actions
+
+### `env`
+São variáveis de ambiente definidas diretamente dentro do workflow, válidas apenas para o job ou step onde estão declaradas.
+
+### `vars`
+São variáveis definidas na aba *Actions > Variables* do repositório, usadas para armazenar valores de configuração que não são sensíveis. Acessadas com `${{ vars.NOME }}`.
+
+### `secrets`
+São informações sensíveis como chaves de API, tokens ou senhas. Definidas em *Actions > Secrets* e acessadas com `${{ secrets.NOME }}`. O GitHub oculta automaticamente seu valor nos logs de execução.

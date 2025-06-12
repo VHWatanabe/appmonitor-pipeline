@@ -1,3 +1,5 @@
+![CI Pipeline](https://github.com/VHWatanabe/appmonitor-pipeline/actions/workflows/ci.yml/badge.svg)
+
 # AppMonitor Pipeline
 
 Projeto simulado para práticas de CI/CD com GitHub Actions, com foco em scripts de monitoração de aplicações web.
@@ -32,3 +34,13 @@ São variáveis definidas na aba *Actions > Variables* do repositório, usadas p
 
 ### `secrets`
 São informações sensíveis como chaves de API, tokens ou senhas. Definidas em *Actions > Secrets* e acessadas com `${{ secrets.NOME }}`. O GitHub oculta automaticamente seu valor nos logs de execução.
+
+---
+
+## Logs, Summaries e Debug no GitHub Actions
+
+- **Logs de debug** (`ACTIONS_STEP_DEBUG=true`) mostram informações detalhadas durante a execução dos steps, facilitando encontrar a causa de falhas ou comportamentos inesperados.
+- **Job summaries** são blocos de texto que aparecem no final da execução de um job, resumindo informações importantes como ambiente, status dos passos e links para artefatos.
+- **Mensagens personalizadas** usando `::warning::` e `::error::` permitem destacar avisos ou erros diretamente nos logs, ajudando a chamar atenção para pontos críticos da pipeline.
+
+Essas ferramentas combinadas melhoram muito o diagnóstico e a manutenção dos pipelines de CI/CD.
